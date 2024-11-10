@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script type="text/JavaScript", src="app.js"></script>
+    <title>JavaScript</title>
+
+    <style>
+        body {
+            /* Задаем фоном картинку */
+            /*background-image: url('/Users/home/Desktop/trollge.jpg'); /* Замените на путь к вашей картинке */
+            /*background-size: cover; /* Чтобы картинка покрывала весь экран */
+            font-family: 'Arial', sans-serif; /* Выбираем шрифт текста */
+            color: rgb(255, 255, 255); /* Цвет текста */
+            text-align: center; /* Центрируем текст */
+            padding: 50px; /* Отступы для удобства */
+        }
+
+        h1 {
+            font-size: 36px; /* Размер заголовка */
+        }
+
+        p {
+            font-size: 18px; /* Размер текста */
+        }
+
+        button {
+            background-color: #b4d8b5; /* Цвет кнопки */
+            color: white; /* Цвет текста кнопки */
+            font-size: 16px; /* Размер текста кнопки */
+            padding: 10px 20px; /* Отступы кнопки */
+            border: none; /* Без рамки */
+            border-radius: 5px; /* Закругление углов */
+            cursor: pointer; /* Курсор при наведении */
+        }
+
+        button:hover {
+            background-color: #566559; /* Цвет кнопки при наведении */
+        }
+
+        input[type="text"], input[type="file"] {
+            font-size: 16px; /* Размер текста в окне ввода */
+            color: #010000; /* Цвет текста в окне ввода */
+            padding: 10px; /* Отступы */
+            border: 1px solid #ccc; /* Рамка */
+            border-radius: 5px; /* Закругление углов */
+            width: 200px; /* Ширина окна ввода */
+            margin: 10px 0; /* Отступы сверху и снизу */
+        }
+
+        
+    </style>
+
+</head>
+<body style="background-color: rgb(10, 62, 80);" >
+
+    <h1>Название статьи</h1>
+
+    <h2>Название раздела</h2>
+
+    <h3>Название подраздела</h3>
+    
+   <input type="file" id="fileInput">
+   
+   <div id="outputField"></div>
+   <div id="hiddenHashField" style="display: none;"></div>
+   <input type="text" id="inputField" placeholder="Ваш комментарий">
+   <button id="registrateButton">зарегистрировать</button>
+   
+</body>
+
+</html>

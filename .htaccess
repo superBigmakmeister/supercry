@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteRule ^hui$ index.html [L]
+Options +ExecCGI
+AddHandler cgi-script .cgi .pl .py .sh
+<Files huihuev>
+	SetHandler cgi-script
+</Files>
+<Files hashreg>
+	SetHandler cgi-script
+</Files>
