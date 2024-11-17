@@ -1,6 +1,29 @@
 #!/usr/bin/python3
 
-print("Content-Type: text/plain")
-print("")
-print("ya pidor")
+import json
+import sys
+
+try:
+
+	data = sys.stdin.read()
+
+	params = json.loads(data)
+	if "inputhash" not in params:
+		raise Exception("no hash in request")
+
+	hashcom = params["inputhash"] + "\t" + params.get("inputcomment", "")
+
+	with open('siteData/hashNcomments.txt', 'a') as file:
+	    # Записываем текст в файл
+	    file.write(hashcom + "\n")
+
+	print("Content-Type: text/plain")
+	print("")
+	print("hashcom: " + hashcom)
+
+except Exception as e:
+
+	print("Content-Type: text/plain")
+	print("")
+	print("error: " + str(e))
 

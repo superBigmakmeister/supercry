@@ -38,16 +38,19 @@ function onload_()
     regButt.addEventListener('click', function(event) {
         event.preventDefault();
         const data = {
-            inputhash: document.getElementById('hiddenHashField').value,
+            inputhash: document.getElementById('hiddenHashField').innerText,
             inputcomment: document.getElementById('inputField').value
         };
+
+	jsonData = JSON.stringify(data) 
+	console.log("jsonData = " + jsonData)
 
         fetch('hashreg', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body:jsonData 
         })
         .then(response => {
             if (!response.ok) {
@@ -55,8 +58,8 @@ function onload_()
             }
             return response.text();
         })
-        .then(data => {
-            console.log('Успех: ', data);
+        .then(scriptReply => {
+            console.log('Успех: ', scriptReply);
         })
         .catch((error) => {
             console.error('Ошибка:', error.message);
