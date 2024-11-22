@@ -1,5 +1,4 @@
 
-
 async function hashFile(file) 
 {
     const arrayBuffer = await file.arrayBuffer(); 
@@ -60,6 +59,7 @@ function onload_()
         })
         .then(scriptReply => {
             console.log('Успех: ', scriptReply);
+	    
         })
         .catch((error) => {
             console.error('Ошибка:', error.message);
@@ -67,5 +67,5 @@ function onload_()
     });
 }
 
-window.onload = onload_;
 
+window.onload= onload_

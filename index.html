@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script type="text/JavaScript", src="app.js"></script>
-    <title>JavaScript</title>
+    <script type="text/JavaScript",  src="downloadfile.js"></script> 
+    <script type="text/JavaScript",  src="bytecount.js"></script> 
 
     <style>
-        body {
+        body
+	 {
             /* Задаем фоном картинку */
             /*background-image: url('/Users/home/Desktop/trollge.jpg'); /* Замените на путь к вашей картинке */
             /*background-size: cover; /* Чтобы картинка покрывала весь экран */
@@ -17,15 +19,23 @@
             padding: 50px; /* Отступы для удобства */
         }
 
-        h1 {
+        #byteCount
+	{
+            font-weight: bold;
+        }
+
+       h1 
+	{
             font-size: 36px; /* Размер заголовка */
         }
 
-        p {
+        p 
+	{
             font-size: 18px; /* Размер текста */
         }
 
-        button {
+        button 
+	{
             background-color: #b4d8b5; /* Цвет кнопки */
             color: white; /* Цвет текста кнопки */
             font-size: 16px; /* Размер текста кнопки */
@@ -35,39 +45,41 @@
             cursor: pointer; /* Курсор при наведении */
         }
 
-        button:hover {
+        button:hover 
+	{
             background-color: #566559; /* Цвет кнопки при наведении */
         }
 
-        input[type="text"], input[type="file"] {
+        input[type="text"], input[type="file"] 
+	{
             font-size: 16px; /* Размер текста в окне ввода */
             color: #010000; /* Цвет текста в окне ввода */
             padding: 10px; /* Отступы */
             border: 1px solid #ccc; /* Рамка */
             border-radius: 5px; /* Закругление углов */
-            width: 200px; /* Ширина окна ввода */
-            margin: 10px 0; /* Отступы сверху и снизу */
-        }
-
+            width: 200px; 
+            margin: 10px 0;         
+	}
+	  
         
     </style>
 
 </head>
 <body style="background-color: rgb(10, 62, 80);" >
 
-    <h1>Название статьи</h1>
+      
+        <h1>Скачать текстовый файл</h1>
+    <button id="downloadBtn">Скачать example.txt</button>
 
-    <h2>Название раздела</h2>
-
-    <h3>Название подраздела</h3>
-    
-   <input type="file" id="fileInput">
+    <h1>Введите текст (максимум 46 байт)</h1>
    
+   <input type="file" id="fileInput">
+   <p>Количество байт: <span id="byteCount">0</span> / 46</p>
    <div id="outputField"></div>
    <div id="hiddenHashField" style="display: none;"></div>
-   <input type="text" id="inputField" placeholder="Ваш комментарий">
+   <input type="text" id="inputField" oninput="updateByteCount()" placeholder="Ваш комментарий">
    <button id="registrateButton">зарегистрировать</button>
    
 </body>
 
-</html>
+</html
