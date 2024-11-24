@@ -1,0 +1,78 @@
+#!/usr/bin/python3
+
+import json
+import sys
+
+try:
+
+	data = sys.stdin.read()
+
+	params = json.loads(data)
+	if "inputhash" not in params:
+		raise Exception("no hash in request")
+
+	hashid = params["inputhash"] 
+	# формат файла info.txt 
+	# что мы храним: хэш файла, id транзакции, комментарий, закодированный op_return, дата и время регистрации
+	# в каком виде мы это будем хранить: храним в одну строчку разделенную табом, а последним полем обязательно должен быть комментарий
+	fieldnames = ['hashid', 'transid', 'time', 'op_return', 'comment']
+
+	with open('info.txt', 'r') as file:
+        	records = file.readlines().split('\n')
+
+	result = ()
+
+	for record in records:
+		try:
+			fields = record.split('\t', len(fieldnames) - 1)
+			if len(fields) != len(fieldnames): continue
+			
+			if fields[0] == hashid:
+				result = {fieldnames[i] : fields[i] for i in len(fields)}
+				break
+		except:
+			pass
+
+	print("Content-Type: text/plain")
+	print("")
+	print(json.dumps(result))
+
+except Exception as e:
+
+	print("Content-Type: text/plain")
+	print("")
+	print("error: " + str(e))
+
+#import requests
+#import json
+#
+#def get_script_hash_via_www(transID):
+#
+#        def get_transaction_data(txid):
+#            url = f"https://blockchain.info/rawtx/{txid}?format=json"
+#            response = requests.get(url)
+#
+#            if response.status_code == 200:
+#                transaction_data = response.json()
+#                return transaction_data
+#            else:
+#                print(f"Error: {response.status_code}")
+#                return None
+#
+#        transaction_data = get_transaction_data(transID)
+#        output = transaction_data["out"]
+#
+#        for current in output:
+#                if "addr" not in current and "script" in current:
+#                        script = current["script"]
+#                        if transaction_data:
+#                                 #print(f"данные транзакции: {json.dumps(transaction_data, indent=4, ensure_ascii=False)}")
+#                                 #print(f"данные транзакции: {json.dumps(current, indent=4, ensure_ascii=False)}")
+#                                 return script
+#
+#transID = "484ab0edc347949771bf6a2f6be984141531f274d66a30a5e6d9e1a86af9aa39"
+#
+#with open('info.txt', 'a') as file:
+#    # Добавляем строки в файл
+#    file.write(get_script_hash_via_www(transID) + '\n')
+#    file.write(' \n')

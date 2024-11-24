@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script type="text/JavaScript", src="output.js"></script>
     <script type="text/JavaScript", src="app.js"></script>
-    <script type="text/JavaScript",  src="downloadfile.js"></script> 
-    <script type="text/JavaScript",  src="bytecount.js"></script> 
+   <!-- <script type="text/JavaScript",  src="downloadfile.js"></script> --> 
+  <!--  <script type="text/JavaScript",  src="bytecount.js"></script> -->
 
     <style>
         body
 	 {
-            /* Задаем фоном картинку */
-            /*background-image: url('/Users/home/Desktop/trollge.jpg'); /* Замените на путь к вашей картинке */
-            /*background-size: cover; /* Чтобы картинка покрывала весь экран */
             font-family: 'Arial', sans-serif; /* Выбираем шрифт текста */
             color: rgb(255, 255, 255); /* Цвет текста */
             text-align: center; /* Центрируем текст */
             padding: 50px; /* Отступы для удобства */
         }
-
-        #byteCount
-	{
-            font-weight: bold;
+	 #registrateButton {
+            background-color: #4CAF50; /* зеленый цвет по умолчанию */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
         }
-
+	#registrateButton:disabled {
+            background-color: red; 
+            color: white; /* Цвет текста кнопки */
+            font-size: 16px; /* Размер текста кнопки */
+            padding: 10px 20px; /* Отступы кнопки */
+            border: none; /* Без рамки */
+            border-radius: 5px; /* Закругление углов */
+            cursor: pointer; /* Курсор при наведении */
        h1 
 	{
             font-size: 36px; /* Размер заголовка */
@@ -36,7 +43,6 @@
 
         button 
 	{
-            background-color: #b4d8b5; /* Цвет кнопки */
             color: white; /* Цвет текста кнопки */
             font-size: 16px; /* Размер текста кнопки */
             padding: 10px 20px; /* Отступы кнопки */
@@ -66,19 +72,13 @@
 
 </head>
 <body style="background-color: rgb(10, 62, 80);" >
-
-      
-        <h1>Скачать текстовый файл</h1>
-    <button id="downloadBtn">Скачать example.txt</button>
-
-    <h1>Введите текст (максимум 46 байт)</h1>
-   
+   <button id="loadFile">Загрузить файл</button>
+   <div id="output"></div>
+   <button id="registrateButton">Зарегистрировать</button>
+   <input type="text" id="inputField" maxlength="46" placeholder="Введите сообщение"  />
    <input type="file" id="fileInput">
-   <p>Количество байт: <span id="byteCount">0</span> / 46</p>
    <div id="outputField"></div>
    <div id="hiddenHashField" style="display: none;"></div>
-   <input type="text" id="inputField" oninput="updateByteCount()" placeholder="Ваш комментарий">
-   <button id="registrateButton">зарегистрировать</button>
    
 </body>
 

@@ -65,6 +65,8 @@ function onload_()
             console.error('Ошибка:', error.message);
         });
     });
+
+    eventListenerSetUp(); 
 }
 
 
