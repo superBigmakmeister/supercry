@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+'''
+echo '{"inputhash":"648f1f1f7d696316c654c6e6165748bb80a0f6d09be72fcbb081487d7b9fc345","inputcomment":"fdsa"}' | ./hashcheck 
+'''
 
 import json
 import sys
@@ -18,19 +21,22 @@ try:
 	fieldnames = ['hashid', 'transid', 'time', 'op_return', 'comment']
 
 	with open('info.txt', 'r') as file:
-        	records = file.readlines().split('\n')
+        	records = file.readlines()
 
-	result = ()
+	result = {}
 
 	for record in records:
 		try:
+			record = record.rstrip()
 			fields = record.split('\t', len(fieldnames) - 1)
 			if len(fields) != len(fieldnames): continue
 			
+			sys.stderr.write(f"{fields[0]} vs {hashid}\n")
 			if fields[0] == hashid:
-				result = {fieldnames[i] : fields[i] for i in len(fields)}
+				result = {fieldnames[i] : fields[i] for i in range(len(fields))}
 				break
-		except:
+		except Exception as e:
+			sys.stderr.write("cannot parse: " + str(record) + "\n" + str(e) + "\n")
 			pass
 
 	print("Content-Type: text/plain")
