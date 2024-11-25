@@ -49,36 +49,3 @@ except Exception as e:
 	print("")
 	print("error: " + str(e))
 
-#import requests
-#import json
-#
-#def get_script_hash_via_www(transID):
-#
-#        def get_transaction_data(txid):
-#            url = f"https://blockchain.info/rawtx/{txid}?format=json"
-#            response = requests.get(url)
-#
-#            if response.status_code == 200:
-#                transaction_data = response.json()
-#                return transaction_data
-#            else:
-#                print(f"Error: {response.status_code}")
-#                return None
-#
-#        transaction_data = get_transaction_data(transID)
-#        output = transaction_data["out"]
-#
-#        for current in output:
-#                if "addr" not in current and "script" in current:
-#                        script = current["script"]
-#                        if transaction_data:
-#                                 #print(f"данные транзакции: {json.dumps(transaction_data, indent=4, ensure_ascii=False)}")
-#                                 #print(f"данные транзакции: {json.dumps(current, indent=4, ensure_ascii=False)}")
-#                                 return script
-#
-#transID = "484ab0edc347949771bf6a2f6be984141531f274d66a30a5e6d9e1a86af9aa39"
-#
-#with open('info.txt', 'a') as file:
-#    # Добавляем строки в файл
-#    file.write(get_script_hash_via_www(transID) + '\n')
-#    file.write(' \n')

@@ -2,7 +2,7 @@ RewriteEngine On
 RewriteRule ^hui$ index.html [L]
 Options +ExecCGI
 AddHandler cgi-script .cgi .pl .py .sh
-<Files huihuev>
+<Files hashcheck>
 	SetHandler cgi-script
 </Files>
 <Files hashreg>

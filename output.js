@@ -1,22 +1,46 @@
-function eventListenerSetUp()
-{
-	document.getElementById('loadFile').addEventListener('click', function() {
-	    fetch('info.txt') // Укажите путь к вашему файлу на сервере
-		.then(response => {
-		    if (!response.ok) {
-			throw new Error('Сеть не в порядке: ' + response.statusText);
-		    }
-		    return response.text(); // Чтение содержимого файла как текст
-		})
-		.then(text => {
-		    const lines = text.split('\n'); // Разделяем текст на строки
-		    const firstTwoLines = lines.slice(0, 2).join('<br>'); // Берем первые две строки и объединяем их с <br>
+function eventListenerSetUp() {
+    var input = document.getElementById('loadFile')
+    input.addEventListener('change', async () => {
+        const file = input.files[0];
 
-		    document.getElementById('output').innerHTML = firstTwoLines; // Выводим результат на страницу
-		})
-		.catch(error => {
-		    console.error('Ошибка:', error);
-		    document.getElementById('output').innerHTML = 'Ошибка при загрузке файла';
-		});
-	});
+        if (!file) {
+            outputField.innerText = 'Файл не выбран.';
+            hiddenHashField.innerText = '';
+        } else {
+            const hash = await hashFile(file);
+            outputField.innerText = 'Хэш файла: ' + hash;
+            hiddenHashField.innerText = hash;
+
+            regButt.disabled = false;
+            const data = {
+                inputhash: document.getElementById('hiddenHashField').innerText,
+                inputcomment: document.getElementById('inputField').value
+            };
+
+            jsonData = JSON.stringify(data)
+            console.log("jsonData = " + jsonData)
+            fetch('hashcheck', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Сеть не в порядке: ' + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+
+                    console.log(text)
+                    //document.getElementById('output').innerHTML = firstTwoLines;
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    document.getElementById('output').innerHTML = 'Ошибка при загрузке файла';
+                });
+        }
+    });
 }
