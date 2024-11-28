@@ -27,7 +27,7 @@ try:
 
 	for record in records:
 		try:
-			record = record.rstrip()
+			record = record.rstrip('\n')
 			fields = record.split('\t', len(fieldnames) - 1)
 			if len(fields) != len(fieldnames): continue
 			

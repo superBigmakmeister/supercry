@@ -5,18 +5,32 @@ async function hashFile(file) {
     return hashHex;
 }
 
+function prettyTime(timestamp) {
+ const date = new Date(timestamp * 1000);
 
-function onload_() {
+// Форматирование даты и времени
+const options = { 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit', 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit', 
+    hour12: false // 24-часовой формат
+};
+
+const formattedDate = date.toLocaleString('ru-RU', options);
+console.log(formattedDate); // Например: "01.10.2021, 00:00:00"
+return formattedDate;
+}
+
+async function updateFileData() {
+	
     const input = document.getElementById("fileInput");
     const outputField = document.getElementById("outputField");
-    const inputField = document.getElementById("inputField");
     const regButt = document.getElementById("registrateButton");
     const hiddenHashField = document.getElementById("hiddenHashField");
-    regButt.disabled = true;
-
-    input.addEventListener('change', async () => {
-
-        const file = input.files[0];
+        const file = document.getElementById("fileInput").files[0];
 
         if (!file) {
             outputField.innerText = 'Файл не выбран.';
@@ -25,11 +39,10 @@ function onload_() {
             const hash = await hashFile(file);
             outputField.innerText = 'Хэш файла: ' + hash;
             hiddenHashField.innerText = hash;
-
+	    document.getElementById('promocode').style = 'display: block';
             regButt.disabled = false;
             const data = {
                 inputhash: document.getElementById('hiddenHashField').innerText,
-                inputcomment: document.getElementById('inputField').value
             };
 
             jsonData = JSON.stringify(data)
@@ -45,18 +58,51 @@ function onload_() {
                     if (!response.ok) {
                         throw new Error('Сеть не в порядке: ' + response.statusText);
                     }
-                    return response.text();
+                    return response.json();
                 })
-                .then(text => {
+                .then(data => {
 
-                    console.log(text)
-                    //document.getElementById('output').innerHTML = firstTwoLines;
+                    document.getElementById('loadFile').style = "display: none";
+                    console.log(data)
+		    if(data['transid'] == null)
+		    {
+			  document.getElementById('infostatus').innerText = "файл еще не зарегистрирован";
+			  document.getElementById('infotime').innerText = "";
+			  document.getElementById('infoscript').innerText = "";
+			  document.getElementById('infotxid').innerText = "";
+			  document.getElementById('infohelp').innerText = "если вы уже отправляли файл на регистрацию, рекомендуется подождать 20-30 минут, чтобы информация о нем появилась в блокчейне";
+                    document.getElementById('loadFile').style = "display: block";
+		    }			
+		else {
+			  document.getElementById('infostatus').innerText = "файл уже зарегистрирован";
+			  document.getElementById('infotime').innerText = "дата регистрации: " + prettyTime(parseInt(data['time']));
+			  //document.getElementById('infoscript').innerHTML = "поле верификации: " + data["op_return"].slice(0, 4) + "<b>" + data["op_return"].slice(4) + "</b>";
+			  document.getElementById('infotxid').innerHTML = "ID транзакции: " 
+			  	+ "<a href='https://blockchain.info/tx/" + data['transid'] + "'>" +  data["transid"] + "</a>";
+			  	//+ "<a href='https://blockchain.info/rawtx/" + data['transid'] + "?format=json'>" +  data["transid"] + "</a>";
+			  document.getElementById('infohelp').innerHTML = "для самостоятельной верификации нажмите на id транзакции и в нижней части информации о транзакции переключитесь на вид JSON и найдите поле script, значение которого начинается с 6a, оно должно включать в себя хэш файла и совпадать со следующей строчкой: " + data["op_return"].slice(0, 4) + "<b>" + data["op_return"].slice(4) + "</b>";
+		    }
                 })
                 .catch(error => {
                     console.error('Ошибка:', error);
                     document.getElementById('output').innerHTML = 'Ошибка при загрузке файла';
                 });
         }
+}
+
+function onload_() {
+    const input = document.getElementById("fileInput");
+    const outputField = document.getElementById("outputField");
+    const regButt = document.getElementById("registrateButton");
+    const hiddenHashField = document.getElementById("hiddenHashField");
+    regButt.disabled = true;
+
+   document.getElementById('loadFile').addEventListener('click', async () => { 
+			  document.getElementById('infostatus').innerText = "обновляем информацию";
+			  document.getElementById('infohelp').innerText = "";
+updateFileData();});
+    input.addEventListener('change', async () => {
+     updateFileData();
 
     });
 
@@ -64,7 +110,6 @@ function onload_() {
         event.preventDefault();
         const data = {
             inputhash: document.getElementById('hiddenHashField').innerText,
-            inputcomment: document.getElementById('inputField').value
         };
 
         jsonData = JSON.stringify(data)
@@ -85,7 +130,8 @@ function onload_() {
             })
             .then(scriptReply => {
                 console.log('Успех: ', scriptReply);
-
+	    updateFileData();
+	    
             })
             .catch((error) => {
                 console.error('Ошибка:', error.message);

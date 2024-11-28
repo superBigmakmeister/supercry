@@ -17,20 +17,20 @@
         }
 	 #registrateButton {
             background-color: #4CAF50; /* зеленый цвет по умолчанию */
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-	#registrateButton:disabled {
-            background-color: red; 
-            color: white; /* Цвет текста кнопки */
+	    color: white; /* Цвет текста кнопки */
             font-size: 16px; /* Размер текста кнопки */
             padding: 10px 20px; /* Отступы кнопки */
             border: none; /* Без рамки */
             border-radius: 5px; /* Закругление углов */
             cursor: pointer; /* Курсор при наведении */
-       h1 
+	    margin: 10px auto;
+        }
+#outputField { margin: 10px; }
+	#registrateButton:disabled {
+
+            background-color: gray; 
+	}
+      h1 
 	{
             font-size: 36px; /* Размер заголовка */
         }
@@ -62,27 +62,58 @@
             padding: 10px; /* Отступы */
             border: 1px solid #ccc; /* Рамка */
             border-radius: 5px; /* Закругление углов */
-            width: 200px; 
-            margin: 10px 0;         
-	}
-	  
-        
+            width: 40%; 
+            margin: 10px;         
+	}        
+	input-fields {
+            display: block;
+            justify-content: center; /* Центрирование текстовых полей */
+        }
+	.entry { margin: 20px; }
+	.text { margin: 5px auto; }
+	#promocode{margin: 10px auto;
+		width: 40%;}
+	.reloadbtn { margin: auto; }
+a {
+    color: white; /* Цвет обычной ссылки */
+}
+
+a:link {
+    color: white; /* Цвет обычной ссылки */
+}
+
+a:visited {
+    color: lightgray; /* Цвет посещенной ссылки */
+}
+
+a:hover {
+    color: yellow; /* Цвет ссылки при наведении */
+}
+
+a:active {
+    color: green; /* Цвет ссылки при нажатии */
+}
     </style>
 
 </head>
 <body style="background-color: rgb(10, 62, 80);" >
    <div id="output"></div>
-   <button id="registrateButton">Зарегистрировать</button>
-   <input type="text" id="inputField" maxlength="46" placeholder="Введите сообщение"  />
+<div class="entry">
    <input type="file" id="fileInput">
    <div id="outputField"></div>
    <div id="hiddenHashField" style="display: none;"></div>
-   <input type="text" id="field1" value="Текст 1" readonly>
-    <input type="text" id="field2" value="Текст 2" readonly>
-    <input type="text" id="field3" value="Текст 3" readonly>
-    <input type="text" id="field4" value="Текст 4" readonly>
-    <input type="text" id="field5" value="Текст 5" readonly>
-   <button id="loadFile">Показать информацию о транзакции</button>
+   <input type='text' id='promocode' style= 'display: none' placeholder= 'для регистрации введите промокод'>
+   <button id="registrateButton">Зарегистрировать</button>
+</div>
+	<div class="input-fields" id="inputfields">
+		<div class="text" id="infostatus"> </div>
+		<div class="text" id="infotime"> </div>
+		<div class="text" id="infotxid"> </div>
+		<div class="text" id="infoscript"> </div>
+		<div class="text" id="infohelp"> </div>
+        </div>
+
+   	<button style="display: none" class="reloadbtn" id="loadFile">обновить информацию о транзакции</button>
 </body>
 
 </html
