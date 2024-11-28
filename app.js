@@ -74,6 +74,8 @@ async function updateFileData() {
                     document.getElementById('loadFile').style = "display: block";
 		    }			
 		else {
+	    		document.getElementById('promocode').style = 'display: none';
+            		regButt.disabled = true;
 			  document.getElementById('infostatus').innerText = "файл уже зарегистрирован";
 			  document.getElementById('infotime').innerText = "дата регистрации: " + prettyTime(parseInt(data['time']));
 			  //document.getElementById('infoscript').innerHTML = "поле верификации: " + data["op_return"].slice(0, 4) + "<b>" + data["op_return"].slice(4) + "</b>";
