@@ -1,21 +1,52 @@
 #!/usr/bin/python3
-
+'''
+echo "{"inputhash":"fdf5374f5de5405115d301f30bcdd348cb10a96fef6807b988b529c66c5b8695","promocode":""}" | python3 hashreg
+'''
 import json
 import sys
 
+errorMessage = None
+
 try:
+	usedfilename = 'usedpromocodescvcxzcdvfbghjkljhog.txt'
+	usedpromocodes = {}
+
+	try:
+
+		with open(usedfilename, 'r') as f:
+			usedpromocodes = [x.rstrip() for x in f.readlines()] 
+
+	except: pass
+
+	with open('promocodescvcxzcdvfbghjkljhog.txt', 'r') as f:
+		promocodes = [x.rstrip() for x in f.readlines()] 
 
 	data = sys.stdin.read()
 
 	params = json.loads(data)
 	if "inputhash" not in params:
-		raise Exception("no hash in request")
-
+		errorMessage = "не задан хэш файла"
+		raise Exception("не задан хэш файла")
+	if "promocode" not in params:
+		errorMessage = "не введен промокод"
+		raise Exception("не введен промокод")
+	promocode = params['promocode']	
+	if promocode not in promocodes:
+		errorMessage = "неизвестный промокод"
+		raise Exception("неизвестный промокод")
+		
+	if promocode  in usedpromocodes:
+		errorMessage = "промокод уже был использован"
+		raise Exception("промокод уже был использован")
+		
 	hashcom = params["inputhash"] + "\t" + params.get("inputcomment", "")
 
-	with open('siteData/hashNcomments.txt', 'a') as file:
+	with open('execution.txt', 'a') as file:
 	    # Записываем текст в файл
 	    file.write(hashcom + "\n")
+	
+	with open(usedfilename, 'a') as f:
+		f.write(promocode + '\n')
 
 	print("Content-Type: text/plain")
 	print("")
@@ -25,5 +56,5 @@ except Exception as e:
 
 	print("Content-Type: text/plain")
 	print("")
-	print("error: " + str(e))
-
+	#print("error: " + str(e))
+	print("error: " + ("необработанное исключение на сервере" if errorMessage is None else errorMessage))
