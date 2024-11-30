@@ -1,5 +1,8 @@
 from cryptos import *
+import sys
 c = Bitcoin(testnet=False)
+print(str(c.timeout))
+c.timeout = 30
 #c.send("89d8d898b95addf569b458fbbd25620e9c9b19c9f730d5d60102abbabcb72678", "tb1qsp907fjefnpkczkgn62cjk4ehhgv2s805z0dkv", "tb1q95cgql39zvtc57g4vn8ytzmlvtt43skngdq0ue", 5000)
 with open('keys.txt', 'r') as f:
 	keys = [k.rstrip().split('\t') for k in f.readlines()]
@@ -28,7 +31,8 @@ except:
 for targetHash in executionHash:
 	if targetHash in executedHash: continue
 	print(f"proccessing {targetHash}")
-	try:
+	#try:
+	if True:
 		
 		value = 0
 		fromIndex = None
@@ -51,6 +55,7 @@ for targetHash in executionHash:
 		opLen = "%02x" % ((len(targetHash) + 1) // 2)
 		script = "6a" + opLen + targetHash
 		outs = [{'value': value, 'address': addrto}, {'value': 0, 'script': script}]
+		inputs = c.unspent(addrfrom)
 		print(f"sending from {addrfrom} ({value} + {fee}) to {addrto} with script {script}")
 		tx = c.mktx(inputs, outs)
 		stx = c.signall(tx, keyfrom.split(':')[1])
@@ -66,8 +71,8 @@ for targetHash in executionHash:
 				file.write(targetHash + '\n') 
 
 		except: pass
-	except Exception as e:
-		print("exception: " + str(e))	
+	#except Exception as e:
+	#	print("exception: " + str(e))	
 
 
 
