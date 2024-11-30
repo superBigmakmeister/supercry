@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-echo "{"inputhash":"fdf5374f5de5405115d301f30bcdd348cb10a96fef6807b988b529c66c5b8695","promocode":""}" | python3 hashreg
+echo '{"inputhash":"fdf5374f5de5405115d301f30bcdd348cb10a96fef6807b988b529c66c5b8696","promocode":"WWW890SP"}' | python3 hashreg
 '''
 import json
 import sys
@@ -56,5 +56,5 @@ except Exception as e:
 
 	print("Content-Type: text/plain")
 	print("")
-	#print("error: " + str(e))
+	sys.stderr.write("error: " + str(e) + '\n')
 	print("error: " + ("необработанное исключение на сервере" if errorMessage is None else errorMessage))

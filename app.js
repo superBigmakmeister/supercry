@@ -132,14 +132,19 @@ function onload_() {
             })
             .then(scriptReply => {
                 if (scriptReply.slice(0, 7) == 'error: ') {
-			    document.getElementById('infostatus').innerHTML = '<span style="color: red">ошибка: ' + scriptReply.slice(7) + '</span>';
-			} else {
+                    document.getElementById('infostatus').innerHTML = '<span style="color: red">ошибка: ' + scriptReply.slice(7) + '</span>';
+                } else {
 
-			    console.log('Успех: ', scriptReply);
-			    updateFileData();
-			}
-		    })
-		    .catch((error) => {
+                    console.log('Успех: ', scriptReply);
+                    //updateFileData();
+                    document.getElementById('infostatus').innerText = "файл отправлен на регистрацию";
+                    document.getElementById('infohelp').innerText = "рекомендуется подождать 20-30 минут, чтобы информация о нем появилась в блокчейне";
+                    document.getElementById('infotime').innerText = "";
+                    document.getElementById('infoscript').innerText = "";
+                    document.getElementById('infotxid').innerText = "";
+                }
+            })
+            .catch((error) => {
                 console.error('Ошибка:', error.message);
                 document.getElementById('infostatus').innerHTML = '<span style="color: red"> ошибка при подключении к серверу </span>';
             });
