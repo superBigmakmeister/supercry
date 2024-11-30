@@ -72,15 +72,25 @@ async function updateFileData() {
                     document.getElementById('infohelp').innerText = "если вы уже отправляли файл на регистрацию, рекомендуется подождать 20-30 минут, чтобы информация о нем появилась в блокчейне";
                     document.getElementById('loadFile').style = "display: block";
                 } else {
+		    const block = data['block']
+		    const isinblockchain = /^\d/.test(block);
                     document.getElementById('promocode').style = 'display: none';
                     regButt.disabled = true;
-                    document.getElementById('infostatus').innerText = "файл уже зарегистрирован";
+                    document.getElementById('infostatus').innerText = (isinblockchain ? "файл уже зарегистрирован" : "файл в процессе регистрации");
                     document.getElementById('infotime').innerText = "дата регистрации: " + prettyTime(parseInt(data['time']));
                     //document.getElementById('infoscript').innerHTML = "поле верификации: " + data["op_return"].slice(0, 4) + "<b>" + data["op_return"].slice(4) + "</b>";
+		   if( isinblockchain ) {
                     document.getElementById('infotxid').innerHTML = "ID транзакции: " +
                         "<a href='https://blockchain.info/tx/" + data['transid'] + "'>" + data["transid"] + "</a>";
-                    //+ "<a href='https://blockchain.info/rawtx/" + data['transid'] + "?format=json'>" +  data["transid"] + "</a>";
                     document.getElementById('infohelp').innerHTML = "для самостоятельной верификации нажмите на id транзакции и в нижней части информации о транзакции переключитесь на вид JSON и найдите поле script, значение которого начинается с 6a, оно должно включать в себя хэш файла и совпадать со следующей строчкой: " + data["op_return"].slice(0, 4) + "<b>" + data["op_return"].slice(4) + "</b>";
+	}
+else{
+
+
+                    document.getElementById('infotxid').innerHTML = "ID транзакции: " + data["transid"] ;
+                    document.getElementById('infohelp').innerHTML = "регистрация транзакции может занять от 5 до 30 минут, вы можете проверять статус транзакции нажимая на кнопку обновить"
+}
+                    //+ "<a href='https://blockchain.info/rawtx/" + data['transid'] + "?format=json'>" +  data["transid"] + "</a>";
                 }
             })
             .catch(error => {

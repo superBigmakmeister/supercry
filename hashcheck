@@ -18,7 +18,7 @@ try:
 	# формат файла info.txt 
 	# что мы храним: хэш файла, id транзакции, комментарий, закодированный op_return, дата и время регистрации
 	# в каком виде мы это будем хранить: храним в одну строчку разделенную табом, а последним полем обязательно должен быть комментарий
-	fieldnames = ['hashid', 'transid', 'time', 'op_return', 'comment']
+	fieldnames = ['hashid', 'transid', 'time', 'op_return', 'block', 'comment']
 
 	with open('info.txt', 'r') as file:
         	records = file.readlines()
