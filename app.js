@@ -85,6 +85,7 @@ async function updateFileData() {
                     document.getElementById('infohelp').innerHTML = "для самостоятельной верификации нажмите на id транзакции и в нижней части информации о транзакции переключитесь на вид JSON и найдите поле script, значение которого начинается с 6a, оно должно включать в себя хэш файла и совпадать со следующей строчкой: " + data["op_return"].slice(0, 4) + "<b>" + data["op_return"].slice(4) + "</b>";
 	}
 else{
+                    document.getElementById('loadFile').style = "display: block";
 
 
                     document.getElementById('infotxid').innerHTML = "ID транзакции: " + data["transid"] ;
